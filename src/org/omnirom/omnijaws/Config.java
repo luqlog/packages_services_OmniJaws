@@ -40,19 +40,25 @@ public class Config {
     public static AbstractWeatherProvider getProvider(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
-
-        if (prefs.getString(PREF_KEY_PROVIDER, "0").equals("0")) {
-            return new OpenWeatherMapProvider(context);
+        String providerVal = prefs.getString(PREF_KEY_PROVIDER, "0");
+        switch (providerVal) {
+            case "0":
+                return new OpenWeatherMapProvider(context);
+            case "1":
+                return new YahooWeatherProvider(context);
+            case "2":
+                return new WeatherbitProvider(context);
         }
-        return new YahooWeatherProvider(context);
+        return null;
     }
 
     public static String getProviderId(Context context) {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(context);
+        String[] providersNames = context.getResources().getStringArray(R.array.provider_entries);
 
-        String provider = prefs.getString(PREF_KEY_PROVIDER, "0");
-        return provider.equals("0") ? "OpenWeatherMap" : "Yahoo";
+        String providerVal = prefs.getString(PREF_KEY_PROVIDER, "0");
+        return providersNames[Integer.parseInt(providerVal)];
     }
 
     public static boolean isMetric(Context context) {

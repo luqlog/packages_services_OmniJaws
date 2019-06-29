@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -104,6 +105,11 @@ public class YahooWeatherProvider extends AbstractWeatherProvider  {
         } catch (JSONException e) {
             Log.e(TAG, "Received malformed places data (input=" + input + ", lang=" + language + ")", e);
         }
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getLanguageMapping() {
         return null;
     }
 
